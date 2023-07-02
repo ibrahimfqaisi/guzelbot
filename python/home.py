@@ -4,7 +4,7 @@ from tkinter import messagebox
 import os
 import about
 import login2
-from face_register import App
+# from face_register import App
 
 
 class FirstPage:
@@ -50,11 +50,11 @@ class FirstPage:
         
 
         def faceId():
-            dashboard_window.destroy()
-            app = App()
-            app.start() 
-            page()
-                   
+            # dashboard_window.destroy()
+            # app = App()
+            # app.start() 
+            # page()
+                 pass  
         def delet_info():
             dashboard_window.withdraw()
             dashboard_window.destroy()            
@@ -127,7 +127,7 @@ class FirstPage:
 
         def chat():
             dashboard_window.withdraw()
-            os.system("python\\chat.py")
+            os.system("python python\\chat.py")
             dashboard_window.destroy()
                     
 

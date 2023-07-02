@@ -147,6 +147,7 @@ def regestier():
         bg="#245c62",
         highlightthickness=0,
         font=("yu gothic ui SemiBold", 16 * -1),
+        show="*"
     )
     passwordName_entry.place(x=13, y=15, width=120, height=27)
 
@@ -157,7 +158,8 @@ def regestier():
         home_bg,
         borderwidth=0,
         image=confirm_passwordName_image,
-        bg="#272A37"
+        bg="#272A37",
+        
     )
     confirm_passwordName_image_Label.place(x=240, y=490)
 
@@ -171,6 +173,7 @@ def regestier():
         bg="#245c62",
         highlightthickness=0,
         font=("yu gothic ui SemiBold", 16 * -1),
+        show="*"
     )
     confirm_passwordName_entry.place(x=13, y=15, width=120, height=27)
 

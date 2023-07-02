@@ -3,6 +3,12 @@ from tkinter import messagebox
 from tkinter import Tk, Button
 from PIL import Image, ImageTk
 import os
+from chatbot import chatbot1
+# import run
+from run import voice, voicetext
+import psycopg2
+
+
 
 '''
 
@@ -30,10 +36,10 @@ def send_message(event=None):  # Updated function with event parameter
         if userId:
         # Display user's message
             listbox.insert(tk.END, "You: " + message)
-            
+            answer = chatbot1(message)
             # Process the user's message with the bot
             # Replace the code below with your bot's logic
-            response = "Bot: Sorry, I am a basic bot and cannot respond."
+            response = answer 
             conn = psycopg2.connect("postgres://vfpgukpn:w4ArNUg7hh4GJkEt9Y6RK3jxzP_-ratk@ruby.db.elephantsql.com/vfpgukpn")
             cursor = conn.cursor()   
             query = "INSERT INTO search_history (user_id, question, answer) VALUES (%s, %s, %s)"
@@ -46,9 +52,33 @@ def send_message(event=None):  # Updated function with event parameter
             entry.delete(0, tk.END)
     else:
         messagebox.showwarning("Warning", "Please enter a message.")
+def voice_to_chat():
+    # Process the voice input with the bot
+    voice()
+    question, answer = voicetext()
+   
 
+    # Display the voice input and bot's response in the chat box
+    listbox.insert(tk.END, "You (Voice): " + question)
+    listbox.insert(tk.END, "Bot: " + answer)
+    file_path = 'userinfo.txt'
+
+    # Read the contents of the file
+    with open(file_path, 'r') as file:
+        str_userinfo = file.read()
+        userinfo=str_userinfo.split(",")
+        userId=userinfo[0]
+    if userId:
+        
+        conn = psycopg2.connect("postgres://vfpgukpn:w4ArNUg7hh4GJkEt9Y6RK3jxzP_-ratk@ruby.db.elephantsql.com/vfpgukpn")
+        cursor = conn.cursor()   
+        query = "INSERT INTO search_history (user_id, question, answer) VALUES (%s, %s, %s)"
+        cursor.execute(query, (userId,  question, answer))
+        conn.commit()
+        conn.close()  
+# window = tk.Tk()
 # Create the main window
-import psycopg2
+
 
 def history():
     file_path = 'userinfo.txt'
@@ -161,10 +191,22 @@ send_button.pack(side="left",pady=20,padx=20)
 # Create a quit button
 
 # Create a mic button
-mic_button = tk.Button(button_frame, image=photo2, height=40, width=40)
+mic_button = tk.Button(button_frame, image=photo2, height=40, width=40,command=voice_to_chat)
 mic_button.pack(side="left",  padx=20)
 
 quit_button = tk.Button(button_frame, image=photo1, command=delet_info, height=40, width=40)
 quit_button.pack(side="left", padx=50)
 
 window.mainloop()
+
+
+
+
+
+
+
+
+
+
+
+

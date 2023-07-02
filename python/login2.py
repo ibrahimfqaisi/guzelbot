@@ -8,6 +8,8 @@ from tkinter import Button, messagebox
 import psycopg2
 import hashlib
 import reset_page
+import Dashboard
+
 '''
 Sajeda
 Ibrahim
@@ -129,6 +131,27 @@ def loginpage ():
 
     )
     switchSignup.place(x=230, y=140,)
+# ================ GO TO Back ====================
+    signup_img2= PhotoImage(file="python\\assets\\signupbtn.png")
+
+
+      
+    switchSignup = Button(
+        bg_imageLogin,
+        image=signup_img2,
+        text="Back",
+        fg="#ff6c38",
+        font=("yu gothic ui Bold", 15 * -1),
+        bg="#272A37",
+        bd=0,
+        cursor="hand2",
+        activebackground="#272A37",
+        activeforeground="#ffffff",
+        command=lambda  : [destroy_login(),Dashboard.page()]
+
+    )
+    switchSignup.place(x=350, y=140,)
+    
 
 
     # ================ Email Name Section ====================
@@ -171,10 +194,12 @@ def loginpage ():
         bg="#245c62",
         highlightthickness=0,
         font=("yu gothic ui SemiBold", 16 * -1),
+        show="*"
     )
     Login_passwordName_entry.place(x=10, y=17, )
 
-
+    # login_password_entry = tk.Entry(Login_passwordName_entry, show="*")
+    # login_password_entry.pack()
     # def login():
     #         login.withdraw()
     #         os.system("python Dashboard.py")

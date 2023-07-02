@@ -79,7 +79,7 @@ class FirstPage:
         
         def login():
             dashboard_window.withdraw()
-            os.system("python\\login2.py")
+            os.system("python python\\login2.py")
         
         logoin_button = Button(
             homepage,
@@ -93,7 +93,7 @@ class FirstPage:
             )
         logoin_button.place(x=210, y=110,) 
         def face():
- 
+            
             dashboard_window.destroy()
             app = App()
             app.start()
@@ -102,7 +102,7 @@ class FirstPage:
             try:
                 with open(file_path, 'r') as file:
                     str_userinfo = file.read()
-                os.system("python\\home.py")
+                os.system("python python\\home.py")
                 
             except:
                 messagebox.showinfo("sign in using email", "face didn't find")

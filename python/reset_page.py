@@ -6,7 +6,11 @@ import psycopg2
 import hashlib
 import smtplib
 from email.message import EmailMessage
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
+connectDatabase = os.getenv("conn")
 '''
 Ibrahim
 Bayan 
@@ -82,7 +86,7 @@ def reset_password(reset_email_entry):
     email = reset_email_entry.get()
     
     # Connect to the PostgreSQL database
-    conn = psycopg2.connect("postgres://vfpgukpn:w4ArNUg7hh4GJkEt9Y6RK3jxzP_-ratk@ruby.db.elephantsql.com/vfpgukpn")
+    conn = psycopg2.connect(connectDatabase)
     cursor = conn.cursor()
 
     # Check if the email and security answers match in the database

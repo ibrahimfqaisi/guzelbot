@@ -4,10 +4,11 @@ from tkinter import messagebox
 import os
 import about
 import login2
-# from face_register import App
+from face_register import App
 
 
-class FirstPage:
+
+class FirstPage():
     def __init__(self, dashboard_window):
         self.dashboard_window = dashboard_window
 
@@ -50,18 +51,17 @@ class FirstPage:
         
 
         def faceId():
-            # dashboard_window.destroy()
-            # app = App()
-            # app.start() 
-            # page()
-                 pass  
+            dashboard_window.destroy()
+            app = App()
+            app.start() 
+            page()
+                #  pass  
         def delet_info():
             dashboard_window.withdraw()
-            dashboard_window.destroy()            
+            dashboard_window.destroy()
             file_path = 'userinfo.txt'
             os.remove(file_path)
             os.system("python python/chat.py")
-
       
 
         home_bgImg = Image.open('python\\assets\\home.png')
@@ -130,7 +130,7 @@ class FirstPage:
             os.system("python python\\chat.py")
             dashboard_window.destroy()
                     
-
+        
         # ========== chat BUTTON =======
         chat_button = Button(
             homepage, 
@@ -183,7 +183,8 @@ class FirstPage:
             relief="flat" , command=delet_info
 )
         logout_button.place(x=110, y=530)
-        
+        # ========== Welcome message =======
+
         file_path1 = 'most_emotion.txt'
         if os.path.exists(file_path1):
             with open(file_path1, 'r') as file:
@@ -202,12 +203,21 @@ class FirstPage:
                     messagebox.showinfo("welcome", f" Hi {name}, why you are felling {emotion} , what happend with you today ?" ) 
 
             os.remove(file_path1)
+    def chat2(self):
+        self.dashboard_window.withdraw()
+        os.system("python python\\chat.py")
 
+        self.dashboard_window.destroy()
 
 def page():
-    window = Tk()
-    FirstPage(window)
-    window.mainloop()
+    try:
+        window = Tk()
+        global mainPoag
+        mainPoag=FirstPage(window)
+        mainPoag
+        window.mainloop()
+    except KeyboardInterrupt:
+        FirstPage.delet_info()
 
 
 if __name__ == '__main__':

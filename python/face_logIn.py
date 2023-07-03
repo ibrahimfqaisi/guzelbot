@@ -1,25 +1,27 @@
 import os.path
-import datetime
 import tkinter as tk
 import cv2
 import util
 from  face_emotion import emotion
-import hashlib
 import psycopg2
+import os
+from dotenv import load_dotenv
 
+load_dotenv()
+connectDatabase = os.getenv("conn")
 
 from PIL import Image, ImageTk
 class App:
     def __init__(self):
         self.main_window = tk.Tk()
-        self.main_window.geometry("1200x520+350+100")
+        self.main_window.geometry("1340x690")
 
 
         self.login_button_main_window = util.get_button(self.main_window, 'login', 'green', self.login)
-        self.login_button_main_window.place(x=750, y=200)
+        self.login_button_main_window.place(x=800, y=300)
 
         self.webcam_label = util.get_img_label(self.main_window)
-        self.webcam_label.place(x=10, y=0, width=700, height=500)
+        self.webcam_label.place(x=10, y=60, width=700, height=500)
 
         self.add_webcam(self.webcam_label)
 
@@ -27,7 +29,6 @@ class App:
         if not os.path.exists(self.db_dir):
             os.mkdir(self.db_dir)
 
-        self.log_path = './log.txt'
 
     def add_webcam(self, label):
         if 'cap' not in self.__dict__:
@@ -57,7 +58,7 @@ class App:
         email = get_email
 
         # Connect to the PostgreSQL database
-        conn = psycopg2.connect("postgres://vfpgukpn:w4ArNUg7hh4GJkEt9Y6RK3jxzP_-ratk@ruby.db.elephantsql.com/vfpgukpn")
+        conn = psycopg2.connect(connectDatabase)
         cursor = conn.cursor()
 
         # Check if the email exists in the database

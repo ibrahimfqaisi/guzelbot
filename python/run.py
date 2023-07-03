@@ -3,17 +3,15 @@ from voice import listen
 from chatbot import chatbot1
 from save import say
 
-'''
-Aseel Bdoor
-'''
-global qu,ans
-def voice():
-    global qu,ans
+
+def voice_text_qu():
     qu=listen()
-    ans=chatbot1(qu)
-    # say(qu)
     print(qu)
-    say(ans)
+    return qu
+
+def text_ans(qu):
+    ans=chatbot1(qu)
     print(ans)
-def voicetext () :
-    return qu,ans
+    return ans
+def say_ans(ans):
+    say(ans)

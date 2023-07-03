@@ -5,9 +5,14 @@ from PIL import Image, ImageTk
 import os
 from chatbot import chatbot1
 # import run
-from run import voice, voicetext
+from run import voice_text_qu, text_ans , say_ans
 import psycopg2
+import os
+from dotenv import load_dotenv
+from tkinter import Tk, Button, Listbox, Scrollbar
 
+load_dotenv()
+connectDatabase = os.getenv("conn")
 
 
 '''
@@ -33,14 +38,18 @@ def send_message(event=None):  # Updated function with event parameter
             str_userinfo = file.read()
             userinfo=str_userinfo.split(",")
             userId=userinfo[0]
+            userName=userinfo[1]
+
         if userId:
         # Display user's message
-            listbox.insert(tk.END, "You: " + message)
+            listbox.insert(tk.END, f"{userName}: " + message)
+            listbox.see(tk.END)  # Scroll down to see the answer
+
             answer = chatbot1(message)
             # Process the user's message with the bot
             # Replace the code below with your bot's logic
             response = answer 
-            conn = psycopg2.connect("postgres://vfpgukpn:w4ArNUg7hh4GJkEt9Y6RK3jxzP_-ratk@ruby.db.elephantsql.com/vfpgukpn")
+            conn = psycopg2.connect(connectDatabase)
             cursor = conn.cursor()   
             query = "INSERT INTO search_history (user_id, question, answer) VALUES (%s, %s, %s)"
             cursor.execute(query, (userId,  message, response))
@@ -48,29 +57,39 @@ def send_message(event=None):  # Updated function with event parameter
             conn.close()                   
 
             # Display bot's response
-            listbox.insert(tk.END, response)
+            listbox.insert(tk.END, "GUZEL: " + response)
+            listbox.see(tk.END)  # Scroll down to see the answer
+
             entry.delete(0, tk.END)
     else:
         messagebox.showwarning("Warning", "Please enter a message.")
 def voice_to_chat():
     # Process the voice input with the bot
-    voice()
-    question, answer = voicetext()
-   
-
-    # Display the voice input and bot's response in the chat box
-    listbox.insert(tk.END, "You (Voice): " + question)
-    listbox.insert(tk.END, "Bot: " + answer)
-    file_path = 'userinfo.txt'
-
+    question =voice_text_qu()
+    answer = text_ans(question)
     # Read the contents of the file
+    file_path = 'userinfo.txt'
     with open(file_path, 'r') as file:
         str_userinfo = file.read()
         userinfo=str_userinfo.split(",")
         userId=userinfo[0]
+        userName=userinfo[1]
+   
+
+    # Display the voice input and bot's response in the chat box
+
+    listbox.insert(tk.END, f"{userName} (Voice): " + question)
+    listbox.see(tk.END)  # Scroll down to see the answer
+
+    listbox.insert(tk.END, "GUZEL: " + answer)
+    listbox.see(tk.END)  # Scroll down to see the answer
+
+
+    say_ans(answer)
+
     if userId:
         
-        conn = psycopg2.connect("postgres://vfpgukpn:w4ArNUg7hh4GJkEt9Y6RK3jxzP_-ratk@ruby.db.elephantsql.com/vfpgukpn")
+        conn = psycopg2.connect(connectDatabase)
         cursor = conn.cursor()   
         query = "INSERT INTO search_history (user_id, question, answer) VALUES (%s, %s, %s)"
         cursor.execute(query, (userId,  question, answer))
@@ -91,7 +110,7 @@ def history():
             username=userinfo[1]
         if username:
             # Connect to the PostgreSQL database
-            conn = psycopg2.connect("postgres://vfpgukpn:w4ArNUg7hh4GJkEt9Y6RK3jxzP_-ratk@ruby.db.elephantsql.com/vfpgukpn")
+            conn = psycopg2.connect(connectDatabase)
             cursor = conn.cursor()
 
             # Retrieve the user's question and corresponding answer from the database
@@ -105,6 +124,8 @@ def history():
                 for username, question, answer, search_date in results:
                     listbox.insert(tk.END, f"User: {question}")
                     listbox.insert(tk.END, f"Bot: {answer}")
+                    listbox.see(tk.END)  # Scroll down to see the answer
+
             else:
                 listbox.insert(tk.END, "No history found.")
 
@@ -169,9 +190,16 @@ photo2 = ImageTk.PhotoImage(image)
 
 
 # Create a listbox to display messages
-listbox = tk.Listbox(window,bg='#272A37',fg='white',bd=10,borderwidth=9,font=("", 15, "bold"))
-listbox.pack(padx=300, pady=40, fill="x", expand=True)
+scrollbar = Scrollbar(window, bg=BACKGROUND_COLOR)
+scrollbar.place(x=1040, y=42, height=340)
 
+# Create a listbox to display messages
+listbox = Listbox(window, bg='#272A37', fg='white', bd=10, borderwidth=9, font=("", 15, "bold"),
+                  yscrollcommand=scrollbar.set)
+listbox.pack(padx=300, pady=40, fill="both", expand=True)
+
+# Configure the scrollbar to control the listbox
+scrollbar.config(command=listbox.yview)
 
 entry = tk.Entry(window, bg="#272A37",fg='white',width=6,bd=10,borderwidth=9,font=("", 15, "bold"))
 entry.pack(padx=300, pady=10, fill="x",)

@@ -9,6 +9,13 @@ from email.message import EmailMessage
 import login2
 import register_page
 from tkinter import Button, messagebox
+import os
+
+from dotenv import load_dotenv
+
+load_dotenv()
+connectDatabase = os.getenv("conn")
+
 # from reset_page import EntryMessageWindow
 class EntryMessageWindow:
     def __init__(self, title, message):
@@ -80,7 +87,7 @@ def signup(signup_first_name_entry, signup_last_name_entry, signup_email_entry, 
     hashed_password = hashlib.sha256(password.encode()).hexdigest()
 
     # Connect to the PostgreSQL database
-    conn = psycopg2.connect("postgres://vfpgukpn:w4ArNUg7hh4GJkEt9Y6RK3jxzP_-ratk@ruby.db.elephantsql.com/vfpgukpn")
+    conn = psycopg2.connect(connectDatabase)
     cursor = conn.cursor()
 
     # Check if the email already exists in the database

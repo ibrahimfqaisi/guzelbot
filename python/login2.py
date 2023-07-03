@@ -9,6 +9,12 @@ import psycopg2
 import hashlib
 import reset_page
 import Dashboard
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
+connectDatabase = os.getenv("conn")
+
 
 '''
 Sajeda
@@ -43,7 +49,7 @@ def login():
     password = Login_passwordName_entry.get()
 
     # Connect to the PostgreSQL database
-    conn = psycopg2.connect("postgres://vfpgukpn:w4ArNUg7hh4GJkEt9Y6RK3jxzP_-ratk@ruby.db.elephantsql.com/vfpgukpn")
+    conn = psycopg2.connect(connectDatabase)
     cursor = conn.cursor()
 
     # Check if the email exists in the database

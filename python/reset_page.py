@@ -28,7 +28,7 @@ def show_custom_error(title, message):
     position_right = int(screen_width / 2 - window_width / 2)
     win.geometry(f"{window_width}x{window_height}+{position_right}+{position_top}")
     win.title(title)
-    win.configure(background="#272A37")
+    win.configure(background="#1D3263")
     win.resizable(False, False)
 
     label = Label(win, text=message, fg="white", bg="#272A37")
@@ -51,7 +51,7 @@ class EntryMessageWindow:
         self.win.geometry(f'{window_width}x{window_height}+{position_right}+{position_top}')
 
         self.win.title(title)
-        self.win.configure(background='#272A37')
+        self.win.configure(background='#1D3263')
         self.win.resizable(False, False)
 
         self.email_entry = Entry(self.win, bg="#3D404B", font=("yu gothic ui semibold", 12), highlightthickness=1, bd=0)
@@ -60,7 +60,7 @@ class EntryMessageWindow:
         email_label = Label(self.win, text=message, fg="#FFFFFF", bg='#272A37', font=("yu gothic ui", 11, 'bold'))
         email_label.place(x=40, y=50)
 
-        update_pass = Button(self.win, fg='#f8f8f8', text='submit', bg='#ff6c38', font=("yu gothic ui", 12, "bold"),
+        update_pass = Button(self.win, fg='#f8f8f8', text='submit', bg='#A28DCF', font=("yu gothic ui", 12, "bold"),
                              cursor='hand2', relief="flat", bd=0, highlightthickness=0, activebackground="#1D90F5",
                              command=self.get_email)
         update_pass.place(x=40, y=260, width=256, height=45)

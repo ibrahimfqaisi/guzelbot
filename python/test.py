@@ -1,24 +1,91 @@
-from tkinter import *
-from PIL import ImageTk, Image
 import tkinter as tk
-import os 
+from tkinter import *
+from tkinter import messagebox
+from tkinter import Tk, Button
+from PIL import Image, ImageTk
+import os
+from chatbot import chatbot1
+# import run
+from run import voice_text_qu, text_ans , say_ans
+import psycopg2
+import os
+from dotenv import load_dotenv
+from tkinter import Tk, Button, Listbox, Scrollbar
+
+load_dotenv()
+connectDatabase = os.getenv("conn")
 
 
 def toggle_microphone():
-    # Add your code here to handle microphone control
-    # For example, you can start/stop recording audio or enable/disable voice input
-    # This part depends on the specific implementation and requirements
-    pass
+    question =voice_text_qu()
+    answer = text_ans(question)
+    # Read the contents of the file
+    file_path = 'userinfo.txt'
+    with open(file_path, 'r') as file:
+        str_userinfo = file.read()
+        userinfo=str_userinfo.split(",")
+        userId=userinfo[0]
+        userName=userinfo[1]
+   
 
-def exit_application():
-    # Add your code here to exit the application
-    # This can include closing any open resources or windows
-    window.destroy()
+    # Display the voice input and bot's response in the chat box
 
-def send_message():
+    display.insert(tk.END, question+"\n\n")
+    display.see(tk.END)  # Scroll down to see the answer
+
+    display.insert(tk.END,answer+ "\n\n")
+    display.see(tk.END)  # Scroll down to see the answer
+
+
+    say_ans(answer)
+
+    if userId:
+        
+        conn = psycopg2.connect(connectDatabase)
+        cursor = conn.cursor()   
+        query = "INSERT INTO search_history (user_id, question, answer) VALUES (%s, %s, %s)"
+        cursor.execute(query, (userId,  question, answer))
+        conn.commit()
+        conn.close()  
+
+# def exit_application():
+#     # Add your code here to exit the application
+#     # This can include closing any open resources or windows
+#     window.destroy()
+
+def send_message(event=None):  # Updated function with event parameter
     message = entry.get()
-    display.insert(tk.END, message + "\n", "right")
-    entry.delete(0, tk.END)
+    if message:
+        file_path = 'userinfo.txt'
+
+        # Read the contents of the file
+        with open(file_path, 'r') as file:
+            str_userinfo = file.read()
+            userinfo=str_userinfo.split(",")
+            userId=userinfo[0]
+            userName=userinfo[1]
+
+        if userId:
+        # Display user's message
+            receive_message(f"{message}", align="left")
+
+            answer = chatbot1(message)
+            # Process the user's message with the bot
+            # Replace the code below with your bot's logic
+            response = answer 
+            conn = psycopg2.connect(connectDatabase)
+            cursor = conn.cursor()   
+            query = "INSERT INTO search_history (user_id, question, answer) VALUES (%s, %s, %s)"
+            cursor.execute(query, (userId,  message, response))
+            conn.commit()
+            conn.close()                   
+
+            # Display bot's response
+            receive_message( response, align="right")
+
+            entry.delete(0, tk.END)
+    else:
+        messagebox.showwarning("Warning", "Please enter a message.")
 
 # Create the main window
 window = Tk()
@@ -75,7 +142,44 @@ home_bg5.image = photo6
 
 
         
-         
+def history():
+    file_path = 'userinfo.txt'
+
+    # Read the contents of the file
+    try:
+        with open(file_path, 'r') as file:
+            str_userinfo = file.read()
+            userinfo=str_userinfo.split(",")
+            username=userinfo[1]
+        if username:
+            # Connect to the PostgreSQL database
+            conn = psycopg2.connect(connectDatabase)
+            cursor = conn.cursor()
+
+            # Retrieve the user's question and corresponding answer from the database
+            query ="SELECT * FROM user_search_history WHERE username =  %s"
+            cursor.execute(query, (username,))
+            results = cursor.fetchall()
+
+            # Display the user's question and the corresponding answer(s)
+
+            if results:
+                for username, question, answer, search_date in results:
+                    window.insert(tk.END, f"{question}")
+                    window.insert(tk.END, f"{answer}")
+                    window.see(tk.END)  # Scroll down to see the answer
+
+            else:
+                window.insert(tk.END, "No history found.")
+
+
+            # Close the database connection
+            conn.close()
+
+            # Clear the entry field
+            entry.delete(0, tk.END)
+    except:
+        window.destroy()        
        
         
        
@@ -151,7 +255,7 @@ logout_button.place(x=1000, y=40)
 
 
 
-display = tk.Text(window, height=20, width=63,bg='#40508a', fg="black", wrap=tk.WORD,font=("yu gothic ui SemiBold", 12))
+display = tk.Text(window, height=20, width=63,bg='#73609B', fg="black", wrap=tk.WORD,font=("yu gothic ui SemiBold", 12))
 display.place(x=640, y=110)
 
 # Create a frame to hold the image and entry widget
@@ -202,17 +306,23 @@ mic_button.place(x=1150, y=550)
 display.tag_configure("left", justify="left")
 display.tag_configure("right", justify="right")
 
-def receive_message(message):
-    box_color = "white"
-    display.insert(tk.END, message + "\n")
-    display.tag_add("box", "end-2l", "end")
-    display.tag_config("box", background=box_color)
+bot_image = Image.open("python\\new\\robot.png") 
+bot_image = bot_image.resize((40, 40))
+bot_photo = ImageTk.PhotoImage(bot_image)
+
+def receive_message(message, align="left"):
+    if align == "left":
+        display.tag_configure("left", justify="left", foreground="snow",background="#5875BB")
+        display.insert(tk.END, message + "\n", "right")
+    else:
+        display.image_create(tk.END, image=bot_photo)
+        display.insert(tk.END, " ", "left")
+        display.tag_configure("right", justify="right", foreground="snow")
+        display.insert(tk.END, message + "\n", "left")
 
     # Scroll to the end of the display
     display.see(tk.END)
 
-# Simulate receiving a message from the bot
-receive_message("Hello, how can I assist you?")
 
 # Run the main loop
 window.mainloop()

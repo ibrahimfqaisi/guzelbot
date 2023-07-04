@@ -137,28 +137,7 @@ def loginpage ():
 
     )
     switchSignup.place(x=370, y=80,)
-    # ================ GO TO Back ====================
-    signup_img2= PhotoImage(file="python\\new\\signup.png")
-
-
-      
-    switchSignup = Button(
-        bg_imageLogin,
-        image=signup_img2,
-        text="Back",
-        fg="#ff6c38",
-        font=("yu gothic ui Bold", 15 * -1),
-        bg="#272A37",
-        bd=0,
-        cursor="hand2",
-        activebackground="#272A37",
-        activeforeground="#ffffff",
-        command=lambda  : [destroy_login(),Dashboard.page()]
-
-    )
-    switchSignup.place(x=350, y=140,)
     
-
 
     # ================ Email Name Section ====================
 

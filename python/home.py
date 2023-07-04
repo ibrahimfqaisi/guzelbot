@@ -5,6 +5,11 @@ import os
 import about
 import login2
 from face_register import App
+import os.path
+import tkinter as tk
+import util
+from  face_emotion import emotion
+from PIL import Image, ImageTk
 
 
 
@@ -12,6 +17,12 @@ class FirstPage():
     def __init__(self, dashboard_window):
         self.dashboard_window = dashboard_window
 
+        # Load the background image
+        background_image = Image.open("python\\new\\home.png")
+        background_image2 = Image.open("python\\new\\Guzel.png")
+
+        self.background_photo = ImageTk.PhotoImage(background_image)
+        self.background_photo2 = ImageTk.PhotoImage(background_image2)        
         # Window Size and Placement
         dashboard_window.rowconfigure(0, weight=1)
         dashboard_window.columnconfigure(0, weight=1)
@@ -58,14 +69,16 @@ class FirstPage():
                 #  pass  
         def delet_info():
             dashboard_window.withdraw()
-            dashboard_window.destroy()
             file_path = 'userinfo.txt'
             os.remove(file_path)
+            os.system("python python\\Dashboard.py")
             os.system("python python/chat.py")
+            dashboard_window.destroy()
+
       
 
-        home_bgImg = Image.open('python\\assets\\home.png')
-        home_bgImg = home_bgImg.resize((1340, 690))
+        home_bgImg = Image.open('python\\new\\home.png')
+        home_bgImg = home_bgImg.resize((1300, 690))
 
         photo = ImageTk.PhotoImage(home_bgImg)
         home_bg = Label(homepage, image=photo, bg='#525561')
@@ -74,33 +87,33 @@ class FirstPage():
 
         
         
-        home_bgImg1 = Image.open('python\\assets\\homebtn.png')
-        home_bgImg1= home_bgImg1.resize((140, 40))
+        home_bgImg1 = Image.open('python\\new\\homentn.png')
+        home_bgImg1= home_bgImg1.resize((130, 46))
         photo2 = ImageTk.PhotoImage(home_bgImg1)
         home_bg1 = Label(homepage, image=photo2, bg='#272A37')
         home_bg1.image = photo2
       
-        home_bgImg2 = Image.open('python\\assets\\chat.png')
-        home_bgImg2= home_bgImg2.resize((150, 50))
+        home_bgImg2 = Image.open('python\\new\\chatbtn.png')
+        home_bgImg2= home_bgImg2.resize((130, 46))
         photo3 = ImageTk.PhotoImage(home_bgImg2)
         home_bg2 = Label(homepage, image=photo3, bg='#272A37')
         home_bg2.image = photo3
 
 
-        home_bgImg3 = Image.open('python\\assets\\face.png')
-        home_bgImg2= home_bgImg2.resize((100, 40))
+        home_bgImg3 = Image.open('python\\new\\facid.png')
+        home_bgImg2= home_bgImg2.resize((90,37))
         photo4 = ImageTk.PhotoImage(home_bgImg3)
         home_bg3 = Label(homepage, image=photo4, )
         home_bg3.image = photo4
       
-        home_bgImg4 = Image.open('python\\assets\\about.png')
-        home_bgImg2= home_bgImg2.resize((130, 40))
+        home_bgImg4 = Image.open('python\\new\\aboutbtn.png')
+        home_bgImg2= home_bgImg2.resize((90,37))
         photo5 = ImageTk.PhotoImage(home_bgImg4)
         home_bg4 = Label(homepage, image=photo5, )
         home_bg4.image = photo5
        
-        home_bgImg5 = Image.open('python\\assets\\logout.png')
-        home_bgImg2= home_bgImg2.resize((110, 40))
+        home_bgImg5 = Image.open('python\\new\\logout.png')
+        home_bgImg2= home_bgImg2.resize((90, 37))
         photo6 = ImageTk.PhotoImage(home_bgImg5)
         home_bg5 = Label(homepage, image=photo6, )
         home_bg5.image = photo6
@@ -120,11 +133,11 @@ class FirstPage():
             highlightthickness=0,
             cursor='hand2',
             relief="flat",)
-        home_button.place(x=130, y=90)
-
+        home_button.place(x=140, y=90)
         def about():
-            pass
-
+            dashboard_window.withdraw()
+            os.system("python python\\about.py")
+            dashboard_window.destroy()
         def chat():
             dashboard_window.withdraw()
             os.system("python python\\chat.py")
@@ -141,8 +154,7 @@ class FirstPage():
             relief="flat" ,
             command=chat
                     )
-        chat_button.place(x=140, y=180)
-
+        chat_button.place(x=300, y=90)
 
 
          # ========== face  BUTTON =======
@@ -151,8 +163,8 @@ class FirstPage():
             cursor='hand2',
             relief="flat" ,
             command=faceId)
-        face_button.place(x=115, y=290)
-
+        face_button.place(x=765, y=90)
+        
         # ========== about  BUTTON =======
         about_button = Button(
             homepage, 
@@ -162,7 +174,7 @@ class FirstPage():
             cursor='hand2',
             relief="flat" ,         
             command=about)
-        about_button.place(x=90, y=400)
+        about_button.place(x=460, y=90)
         
 
 
@@ -182,9 +194,10 @@ class FirstPage():
             cursor='hand2',
             relief="flat" , command=delet_info
 )
-        logout_button.place(x=110, y=530)
-        # ========== Welcome message =======
-
+        logout_button.place(x=1000, y=90)
+        self.Welcome()
+               # ========== Welcome message =======
+    def Welcome(self):
         file_path1 = 'most_emotion.txt'
         if os.path.exists(file_path1):
             with open(file_path1, 'r') as file:
@@ -197,24 +210,57 @@ class FirstPage():
                 userinfo=str_userinfo.split(",")
                 name=userinfo[1]
                 if emotion == "Neutral" :
-                    messagebox.showinfo("welcome", f"{name} ,You are capable of amazing things. "  ) 
+                    self.pop(f"welcome {name} ,You are capable of amazing things. " )
+                #     messagebox.showinfo("welcome", f"{name} ,You are capable of amazing things. "  ) 
                 else :
+                      self.pop(f"welcome, Hi {name}, why you are felling {emotion} , what happend with you today ?")
+                #     messagebox.showinfo("welcome", f" Hi {name}, why you are felling {emotion} , what happend with you today ?" ) 
 
-                    messagebox.showinfo("welcome", f" Hi {name}, why you are felling {emotion} , what happend with you today ?" ) 
-
-            os.remove(file_path1)
+            os.remove(file_path1) 
     def chat2(self):
-        self.dashboard_window.withdraw()
+        self.register_new_user_window.destroy()
         os.system("python python\\chat.py")
 
         self.dashboard_window.destroy()
+    def pop(self,text2):
+        if hasattr(self, 'welcome') and self.register_new_user_window.winfo_exists():
+            self.register_new_user_window.destroy()
 
+        self.register_new_user_window = tk.Toplevel(self.dashboard_window)
+        self.register_new_user_window.geometry("720x480")
+        self.register_new_user_window.title("Register New User")
+
+        # Use the existing background image label for the window
+        self.background_label = tk.Label(self.register_new_user_window, image=self.background_photo2)
+        self.background_label.place(x=0, y=0, relwidth=1, relheight=1)
+
+        self.accept_button_register_new_user_window = util.get_button(
+            self.register_new_user_window, 'Chat', 'turquoise1', self.chat2
+            
+        )
+        self.accept_button_register_new_user_window.place(x=160, y=120)
+
+        self.try_again_button_register_new_user_window = util.get_button(
+            self.register_new_user_window, 'close', 'navy', self.try_again_register_new_user
+        )
+        self.try_again_button_register_new_user_window.place(x=160, y=240)
+
+        # Additional text
+        self.additional_text_label = tk.Label(self.register_new_user_window, text=text2)
+        self.additional_text_label.config(font=("Arial", 16))  # Increase font size to 16
+
+        self.additional_text_label.place(x=160, y=20)
+
+            # self.add_img_to_label(self.capture_label)
+    def try_again_register_new_user(self):
+        self.register_new_user_window.destroy()
 def page():
     try:
         window = Tk()
         global mainPoag
         mainPoag=FirstPage(window)
         mainPoag
+        mainPoag.Welcome()
         window.mainloop()
     except KeyboardInterrupt:
         FirstPage.delet_info()

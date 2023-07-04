@@ -51,7 +51,7 @@ class FirstPage:
 
         # ====== MENU BAR ==========
         
-        home_bgImg = Image.open('python\\assets\\dash.png')
+        home_bgImg = Image.open('python\\new\\dash.png')
         home_bgImg = home_bgImg.resize((1340, 690))
 
         photo = ImageTk.PhotoImage(home_bgImg)
@@ -59,7 +59,7 @@ class FirstPage:
         home_bg.image = photo
         home_bg.place(x=-10, y=-10)
 
-        home_bgImg1 = Image.open('python\\assets\\lodbtn.png')
+        home_bgImg1 = Image.open('python\\new\\log2.png')
         home_bgImg1= home_bgImg1.resize((160, 55))
 
         photo2 = ImageTk.PhotoImage(home_bgImg1)
@@ -68,7 +68,7 @@ class FirstPage:
         
       
        
-        home_bgImg2 = Image.open('python\\assets\\face.png')
+        home_bgImg2 = Image.open('python\\new\\face.png')
         home_bgImg2= home_bgImg2.resize((160, 55))
 
         photo3 = ImageTk.PhotoImage(home_bgImg2)
@@ -91,7 +91,7 @@ class FirstPage:
             command=login
             
             )
-        logoin_button.place(x=210, y=110,) 
+        logoin_button.place(x=110, y=490,) 
         def face():
             
             dashboard_window.destroy()
@@ -120,7 +120,7 @@ class FirstPage:
             command=face
     
             )
-        face_button.place(x=210, y=190,)
+        face_button.place(x=310, y=490,)
     
 
         

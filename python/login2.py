@@ -11,6 +11,7 @@ import reset_page
 import Dashboard
 import os
 from dotenv import load_dotenv
+from face_logIn import App
 
 load_dotenv()
 connectDatabase = os.getenv("conn")
@@ -108,7 +109,7 @@ def loginpage ():
 
     # ================Background Image ====================
      
-    home_bgImg = Image.open('python\\assets\\loginbg.png')
+    home_bgImg = Image.open('python\\new\\login2.png')
     home_bgImg = home_bgImg.resize((1340, 690))
 
     photo = ImageTk.PhotoImage(home_bgImg)
@@ -120,25 +121,24 @@ def loginpage ():
    
 
     # ================ GO TO SIGN UP ====================
-    signup_img= PhotoImage(file="python\\assets\\signupbtn.png")
+    signup_img= PhotoImage(file="python\\new\singup.png")
 
     switchSignup = Button(
         bg_imageLogin,
         image=signup_img,
         text="Sign Up",
         fg="#ff6c38",
+        bg='#A28DCF',
         font=("yu gothic ui Bold", 15 * -1),
-        bg="#272A37",
         bd=0,
         cursor="hand2",
-        activebackground="#272A37",
         activeforeground="#ffffff",
         command=lambda  : [destroy_login(),register_page.regestier()]
 
     )
-    switchSignup.place(x=230, y=140,)
-# ================ GO TO Back ====================
-    signup_img2= PhotoImage(file="python\\assets\\signupbtn.png")
+    switchSignup.place(x=370, y=80,)
+    # ================ GO TO Back ====================
+    signup_img2= PhotoImage(file="python\\new\\signup.png")
 
 
       
@@ -161,14 +161,15 @@ def loginpage ():
 
 
     # ================ Email Name Section ====================
-    Login_emailName_image = PhotoImage(file="python\\assets\\lable.png")
+
+    #Login_emailName_image = PhotoImage(file="python\\assets\\lable.png")    
     Login_emailName_image_Label = Label(
-        bg_imageLogin,
-        image=Login_emailName_image,
+        window,
+
         borderwidth=0,
-        bg="#272A37"
+        bg='#A28DCF'
     )
-    Login_emailName_image_Label.place(x=76, y=270)
+    Login_emailName_image_Label.place(x=96, y=250,width=400,height=40)
 
 
     
@@ -176,43 +177,36 @@ def loginpage ():
     Login_emailName_entry = Entry(
         Login_emailName_image_Label,
         bd=0,
-       bg="#245c62",
+        bg='#A28DCF',
         highlightthickness=0,
-        font=("yu gothic ui SemiBold", 16 * -1),
+        font=("yu gothic ui SemiBold", 15),
     )
-    Login_emailName_entry.place(x=9, y=10,width=300)
+    Login_emailName_entry.place(x=9, y=10,width=400)
 
 
     # ================ Password Name Section ====================
-    Login_passwordName_image = PhotoImage(file="python\\assets\\lable.png")
+    # Login_passwordName_image = PhotoImage(file="python\\assets\\lable.png")
     Login_passwordName_image_Label = Label(
         bg_imageLogin,
-        image=Login_passwordName_image,
-      
-        borderwidth=0
+        borderwidth=0,
+        bg='#A28DCF'
     )
-    Login_passwordName_image_Label.place(x=80, y=380)
-
+    Login_passwordName_image_Label.place(x=96, y=390,width=400,height=40)
     global Login_passwordName_entry
     Login_passwordName_entry = Entry(
         Login_passwordName_image_Label,
         bd=0,
-        bg="#245c62",
+        bg='#A28DCF',
         highlightthickness=0,
-        font=("yu gothic ui SemiBold", 16 * -1),
+        font=("yu gothic ui SemiBold", 15),
         show="*"
     )
-    Login_passwordName_entry.place(x=10, y=17, )
+    Login_passwordName_entry.place(x=10, y=17,width=400 )
 
-    # login_password_entry = tk.Entry(Login_passwordName_entry, show="*")
-    # login_password_entry.pack()
-    # def login():
-    #         login.withdraw()
-    #         os.system("python Dashboard.py")
-    #         login.destroy()
+
     # =============== Submit Button ====================
     Login_button_image_1 = PhotoImage(
-        file="python\\assets\\loginbtn.png")
+        file="python\\new\\submit.png")
     Login_button_1 = Button(
         bg_imageLogin,
         image=Login_button_image_1,
@@ -222,25 +216,60 @@ def loginpage ():
         relief="flat",
         activebackground="#272A37",
         cursor="hand2",
-        bg='#272A37',
+        bg='#A28DCF',
         command=lambda:login()
         
     )
     
-    Login_button_1.place(x=190, y=480)
+    Login_button_1.place(x=120, y=520)
 
-    forgot_password_image= PhotoImage(file="python\\assets\\forgt.png")
+
+    face_button_image_1 = PhotoImage(
+        file="python\\new\\face.png")
+    face_button_1 = Button(
+        bg_imageLogin,
+        image=face_button_image_1,
+        borderwidth=0,
+        highlightthickness=0,
+        command=lambda:face(),
+        relief="flat",
+        cursor="hand2",
+       bg='#A28DCF',
+
+    )
+
+    face_button_1.place(x=330, y=520)
+
+    def face():
+        destroy_login()
+        app = App()
+        app.start()     
+           
+        file_path = 'userinfo.txt'
+        try:
+            with open(file_path, 'r') as file:
+                str_userinfo = file.read()
+            os.system("python python\\home.py")
+            
+        except:
+            messagebox.showinfo("sign in using email", "face didn't find")
+            
+            loginpage()
+
+
+    forgot_password_image= PhotoImage(file="python\\new\\forget.png")
+
     forgotPassword = Button(
         bg_imageLogin,
         image=forgot_password_image,
-        bg="#272A37",
+        bg='#A28DCF',
         bd=0,
-        activebackground="#272A37",
+        borderwidth=0,
         activeforeground="#ffffff",
         cursor="hand2",
         command=lambda: forgot_password(),
     )
-    forgotPassword.place(x=150, y=443, )
+    forgotPassword.place(x=230, y=460, )
 
 
     def forgot_password():
@@ -265,10 +294,10 @@ def loginpage ():
         email_entry3.place(x=40, y=80, width=256, height=50)
         email_entry3.config(highlightbackground="#3D404B", highlightcolor="#206DB4")
         email_label3 = Label(win, text='• Email', fg="#FFFFFF", bg='#272A37',
-                            font=("yu gothic ui", 11, 'bold'))
+                            font=("yu gothic ui", 15, 'bold'))
         email_label3.place(x=40, y=50)
 
-        update_pass = Button(win, fg='#f8f8f8', text='Update Password', bg='#ff6c38', font=("yu gothic ui", 12, "bold"),
+        update_pass = Button(win, fg='#f8f8f8', text='Update Password', bg='#ff6c38', font=("yu gothic ui", 15, "bold"),
                             cursor='hand2', relief="flat", bd=0, highlightthickness=0, activebackground="#1D90F5",
                             command=lambda:destroy_resset(email_entry3))
         update_pass.place(x=40, y=260, width=256, height=45)

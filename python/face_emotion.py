@@ -33,8 +33,8 @@ def emotion(cap):
             print(emotion)  # Print the detected emotion
 
         cv2.namedWindow("Frame", cv2.WINDOW_NORMAL)  # Create a resizable window
-        cv2.moveWindow("Frame", 10, 60)  # Set the position of the window
-        cv2.resizeWindow("Frame", 700, 500)  # Set the size of the window
+        cv2.moveWindow("Frame", 50, 80)  # Set the position of the window
+        cv2.resizeWindow("Frame", 600, 450)  # Set the size of the window
         cv2.imshow("Frame", frame)
         k = cv2.waitKey(1)
         if k == ord('q'):

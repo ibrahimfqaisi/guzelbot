@@ -19,8 +19,8 @@ class FirstPage():
 
         # Load the background image
         background_image = Image.open("python\\new\\home.png")
-        background_image2 = Image.open("python\\new\\Guzel_(13).png")
-        background_image2= background_image2.resize((720,480))
+        background_image2 = Image.open("python\\new\\welcome.png")
+        background_image2= background_image2.resize((700,460))
         self.background_photo = ImageTk.PhotoImage(background_image)
         self.background_photo2 = ImageTk.PhotoImage(background_image2)        
         # Window Size and Placement
@@ -30,6 +30,7 @@ class FirstPage():
         screen_height = dashboard_window.winfo_height()
         app_width = 1340
         app_height = 690
+        dashboard_window.title("Home")
         x = (screen_width/2)-(app_width/2)
         y = (screen_height/160)-(app_height/160)
         dashboard_window.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
@@ -198,11 +199,10 @@ class FirstPage():
         self.Welcome()
                # ========== Welcome message =======
     def Welcome(self):
-        # file_path1 = 'most_emotion.txt'
-        # if os.path.exists(file_path1):
-        #     with open(file_path1, 'r') as file:
-        #         emotion = file.read()
-            emotion= "Angry"
+        file_path1 = 'most_emotion.txt'
+        if os.path.exists(file_path1):
+            with open(file_path1, 'r') as file:
+                emotion = file.read()
 
             file_path2 = 'userinfo.txt'
             # Read the contents of the file
@@ -212,13 +212,11 @@ class FirstPage():
                 name=userinfo[1]
 
                 if emotion == "Neutral" :
-                    self.pop(f"welcome {name} ,\n You are capable of \namazing things. " )
-                #     messagebox.showinfo("welcome", f"{name} ,You are capable of amazing things. "  ) 
+                    self.pop(f"Hi {name} ,\n You are capable of \namazing things. " )
                 else :
-                      self.pop(f"welcome, Hi {name},\n{message_emotion(emotion)}")
-                #     messagebox.showinfo("welcome", f" Hi {name}, why you are felling {emotion} , what happend with you today ?" ) 
+                      self.pop(f"Hi {name},\n{message_emotion(emotion)}")
 
-            # os.remove(file_path1) 
+            os.remove(file_path1) 
     def chat2(self):
         self.register_new_user_window.destroy()
         self.dashboard_window.withdraw()
@@ -232,7 +230,7 @@ class FirstPage():
 
         self.register_new_user_window = tk.Toplevel(self.dashboard_window)
         self.register_new_user_window.attributes('-topmost', True)
-        self.register_new_user_window.geometry("720x480")
+        self.register_new_user_window.geometry("600x400")
         self.register_new_user_window.title("welcome")
         self.center_window()
 
@@ -242,19 +240,19 @@ class FirstPage():
         self.accept_button_register_new_user_window = util.get_button(
             self.register_new_user_window, 'Chat', 'turquoise1', self.chat2
         )
-        self.accept_button_register_new_user_window.place(x=400, y=60)
+        self.accept_button_register_new_user_window.place(x=170, y=300)
 
 
         self.try_again_button_register_new_user_window = util.get_button(
-            self.register_new_user_window, 'close', 'navy', self.try_again_register_new_user
+            self.register_new_user_window, 'Close', 'navy', self.try_again_register_new_user
         )
-        self.try_again_button_register_new_user_window.place(x=550, y=60)
+        self.try_again_button_register_new_user_window.place(x=330, y=300)
 
         # Calculate the position of the additional text label dynamically
         # label_width = 400
         # label_height = 200
-        label_x = 90
-        label_y = 180
+        label_x = 25
+        label_y = 160
 
         self.additional_text_label = tk.Label(self.register_new_user_window, text=text2,bg='#A28DCF')
         self.additional_text_label.config(font=("Arial", 16))
@@ -311,6 +309,7 @@ def message_emotion(emotion):
     
 def page():
         window = Tk()
+        window.title("Home")
         FirstPage(window)
         window.mainloop()
 

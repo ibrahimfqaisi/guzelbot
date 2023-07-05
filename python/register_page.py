@@ -19,7 +19,7 @@ def destroy_signup_page():
 def regestier():
     global window
     window = Tk()
-    
+    window.title('sign up ')
     height = 690
     width = 1340
     x = (window.winfo_screenwidth() // 2) - (width // 2)
@@ -27,8 +27,7 @@ def regestier():
     window.geometry('{}x{}+{}+{}'.format(width, height, x, y))
 
     window.configure(bg="#525561")
-   
-
+    
     # ================Background Image ====================
     home_bgImg = Image.open('python\\new\\sigubbg.png')
     home_bgImg = home_bgImg.resize((1340, 690))
@@ -183,7 +182,7 @@ def regestier():
         bg='black',
         command=lambda:signup(firstName_entry,lastName_entry,emailName_entry,passwordName_entry)
     )
-    submit_button .place(x=200, y=535)
+    submit_button .place(x=290, y=545)
    
 
 

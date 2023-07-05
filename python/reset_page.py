@@ -4,6 +4,8 @@ import tkinter.simpledialog as simpledialog
 from tkinter import Button, messagebox, Label, Toplevel
 import psycopg2
 import hashlib
+from PIL import ImageTk, Image
+
 import smtplib
 from email.message import EmailMessage
 import os
@@ -28,10 +30,10 @@ def show_custom_error(title, message):
     position_right = int(screen_width / 2 - window_width / 2)
     win.geometry(f"{window_width}x{window_height}+{position_right}+{position_top}")
     win.title(title)
-    win.configure(background="#1D3263")
+    win.configure(background="#6C5692")
     win.resizable(False, False)
 
-    label = Label(win, text=message, fg="white", bg="#272A37")
+    label = Label(win, text=message, fg="white", bg="#6C5692")
     label.pack(pady=20)
 
     ok_button = Button(win, text="OK", command=win.destroy)
@@ -54,16 +56,24 @@ class EntryMessageWindow:
         self.win.configure(background='#1D3263')
         self.win.resizable(False, False)
 
-        self.email_entry = Entry(self.win, bg="#3D404B", font=("yu gothic ui semibold", 12), highlightthickness=1, bd=0)
-        self.email_entry.place(x=40, y=80, width=256, height=50)
-        self.email_entry.config(highlightbackground="#3D404B", highlightcolor="#206DB4")
-        email_label = Label(self.win, text=message, fg="#FFFFFF", bg='#272A37', font=("yu gothic ui", 11, 'bold'))
-        email_label.place(x=40, y=50)
+        home_bgImg = Image.open('python\\new\\Guzel.png')
+        home_bgImg = home_bgImg.resize((370, 360))
 
-        update_pass = Button(self.win, fg='#f8f8f8', text='submit', bg='#A28DCF', font=("yu gothic ui", 12, "bold"),
-                             cursor='hand2', relief="flat", bd=0, highlightthickness=0, activebackground="#1D90F5",
+        photo = ImageTk.PhotoImage(home_bgImg)
+        home_bg = Label(self.win, image=photo, bg='#525561')
+        home_bg.image = photo
+        home_bg.place(x=-10, y=-10)
+
+        self.email_entry = Entry(self.win, bg="#A28DCF", font=("yu gothic ui semibold", 12), highlightthickness=1, bd=0)
+        self.email_entry.place(x=40, y=110, width=256, height=50)
+        self.email_entry.config(highlightbackground="#3D404B", highlightcolor="#206DB4")
+        email_label = Label(self.win, text=message, fg="#FFFFFF", bg='#623F82', font=("yu gothic ui", 11, 'bold'))
+        email_label.place(x=20, y=50)
+
+        update_pass = Button(self.win, fg='#f8f8f8', text='submit', bg='#53A9D4', font=("yu gothic ui", 12, "bold"),
+                             cursor='hand2', relief="flat", bd=0, highlightthickness=0, activebackground="#623F82",
                              command=self.get_email)
-        update_pass.place(x=40, y=260, width=256, height=45)
+        update_pass.place(x=40, y=200, width=256, height=45)
 
         self.win.protocol("WM_DELETE_WINDOW", self.on_close)
 
@@ -104,6 +114,7 @@ def reset_password(reset_email_entry):
         # msg['From'] = 'guzel.ltuc@gmail.com'
         msg['To'] = email
         msg.set_content(f'confirmation code is: {code}')
+        
         with smtplib.SMTP('smtp.gmail.com', 587) as smtp:
             smtp.starttls()
             smtp.login('ahmasamer51@gmail.com', 'ofqhdqbtnihfuysm')

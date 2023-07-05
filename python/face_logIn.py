@@ -15,6 +15,7 @@ connectDatabase = os.getenv("conn")
 class App:
     def __init__(self):
         self.main_window = tk.Tk()
+        self.main_window.title("Face Login")
         self.main_window.geometry("1340x690")
 
         # Load the background image

@@ -3,6 +3,7 @@ from tkinter import *
 from tkinter import messagebox
 from tkinter import Tk, Button
 from PIL import Image, ImageTk
+from face_register import App
 import os
 from chatbot import chatbot1
 # import run
@@ -86,7 +87,7 @@ def send_message(event=None):  # Updated function with event parameter
 
 # Create the main window
 window = Tk()
-window.title("GUZEL BOT")
+window.title("Chat")
 window_width = 1340
 window_height = 690
 screen_width = window.winfo_screenwidth()
@@ -178,6 +179,46 @@ def history():
         window.destroy()        
        
         
+def faceId():
+    window.destroy()
+    app = App()
+    app.start() 
+    os.system("python python\\home.py")
+                
+def delet_info():
+    window.withdraw()
+    file_path = 'userinfo.txt'
+    os.remove(file_path)
+    os.system("python python\\Dashboard.py")
+    os.system("python python/chat.py")
+    window.destroy()
+
+def Dashboard():
+    window.withdraw()
+    os.system("python python\\Dashboard.py")
+    window.destroy()
+
+def delet_info():
+    window.withdraw()
+    file_path = 'userinfo.txt'
+    os.remove(file_path)
+    os.system("python python\\Dashboard.py")
+    os.system("python python/chat.py")
+    window.destroy()
+
+def about():
+    window.withdraw()
+    os.system("python python\\about.py")
+    window.destroy()
+def chat():
+    window.withdraw()
+    os.system("python python\\chat.py")
+    window.destroy()
+
+def home():
+    window.withdraw()
+    os.system("python python\\home.py")
+    window.destroy()
        
 
         # ========== HOME BUTTON =======
@@ -187,14 +228,11 @@ home_button = Button(
             borderwidth=0,
             highlightthickness=0,
             cursor='hand2',
-            relief="flat",)
+            relief="flat",
+            command= home,
+            )
 home_button.place(x=140, y=40)
 
-def about():
-            pass
-
-def chat():
-            pass
 
         # ========== chat BUTTON =======
 chat_button = Button(
@@ -204,7 +242,6 @@ chat_button = Button(
             highlightthickness=0,
             cursor='hand2',
             relief="flat" ,
-            command=chat
                     )
 chat_button.place(x=300, y=40)
 
@@ -214,7 +251,8 @@ chat_button.place(x=300, y=40)
 face_button = Button(window,image=photo4 , borderwidth=0,
             highlightthickness=0,
             cursor='hand2',
-            relief="flat" ,command=about)
+            relief="flat" ,
+            command=faceId)
 face_button.place(x=765, y=40)
 
         # ========== about  BUTTON =======
@@ -229,18 +267,14 @@ about_button = Button(
 about_button.place(x=460, y=40)
         
      
-
-def Dashboard():
-            window.withdraw()
-            os.system("python python\\Dashboard.py")
-            window.destroy()
             
         # ========== LOG OUT =======
 logout_button = Button(window,  image=photo6,
             borderwidth=0,
             highlightthickness=0,
             cursor='hand2',
-            relief="flat" , command=Dashboard)
+            relief="flat" , 
+            command=Dashboard)
 logout_button.place(x=1000, y=40)
 
 

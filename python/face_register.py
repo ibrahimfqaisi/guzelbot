@@ -13,6 +13,7 @@ class App:
     def __init__(self):
         self.main_window = tk.Tk()
         self.main_window.geometry("1340x690")
+        self.main_window.title("Face Signup")
 
         # Load the background image
         background_image = Image.open("python\\new\\Guzel.png")

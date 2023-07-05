@@ -4,6 +4,9 @@ import torch
 from model import NeuralNet
 from nltk_utils import bag_of_words, tokenize
 def chatbot1(question) :
+    bye=["See you later ..","Love you","Don't be late to come back"]
+    if (question.lower() == "quit") | (question.lower() == "bye") | (question.lower() == "goodbye") | (question.lower() == "good bye"):
+        return f"{question.capitalize()}\n{random.choice(bye)}"
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 
     with open('python\intents.json', 'r') as json_data:
@@ -24,12 +27,6 @@ def chatbot1(question) :
     model.eval()
 
     bot_name = "guzel"
-    print("Let's chat! (type 'quit' to exit)")
-    # while True:
-        # sentence = "do you use credit cards?"
-        # sentence = input("You: ")
-        # if sentence == "quit":
-            # break
 
     sentence = tokenize(question)
     X = bag_of_words(sentence, all_words)
@@ -43,10 +40,11 @@ def chatbot1(question) :
 
     probs = torch.softmax(output, dim=1)
     prob = probs[0][predicted.item()]
-    if prob.item() > 0.75:
+    if prob.item() > 0.80:
         for intent in intents['intents']:
             if tag == intent["tag"]:
                 return(f"{random.choice(intent['responses'])}")
+                break
     else:
         return(" I do not understand...")
     

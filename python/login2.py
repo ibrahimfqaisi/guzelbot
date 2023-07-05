@@ -231,7 +231,7 @@ def loginpage ():
             os.system("python python\\home.py")
             
         except:
-            messagebox.showinfo("sign in using email", "face didn't find")
+            show_custom_error("sign in using email", "face didn't find")
             
             loginpage()
 

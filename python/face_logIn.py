@@ -94,7 +94,8 @@ class App:
         name = util.recognize(self.most_recent_capture_arr, self.db_dir)
 
         if name in ["unknown_person", "no_persons_found"]:
-            util.msg_box("Ups...", "Unknown user. Please register new user or try again.")
+            pass
+            # util.msg_box("Ups...", "Unknown user. Please register new user or try again.")
         else:
             get_email = name
             self.saveData(get_email)

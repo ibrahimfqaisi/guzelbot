@@ -8,6 +8,7 @@ import util
 from  face_emotion import emotion
 from PIL import Image, ImageTk
 
+
 class App:
     def __init__(self):
         self.main_window = tk.Tk()

@@ -11,7 +11,7 @@ import reset_page
 import Dashboard
 import os
 from dotenv import load_dotenv
-# from face_logIn import App
+from face_logIn import App
 
 load_dotenv()
 connectDatabase = os.getenv("conn")
@@ -221,21 +221,23 @@ def loginpage ():
     face_button_1.place(x=330, y=520)
 
     def face():
-        pass
-    #     destroy_login()
-    #     app = App()
-    #     app.start()     
+        
+        destroy_login()
+        app = App()
+        app.start()     
            
-    #     file_path = 'userinfo.txt'
-    #     try:
-    #         with open(file_path, 'r') as file:
-    #             str_userinfo = file.read()
-    #         os.system("python python\\home.py")
+        file_path = 'userinfo.txt'
+        try:
+            with open(file_path, 'r') as file:
+                str_userinfo = file.read()
+            os.system("python python\\home.py")
             
-    #     except:
-    #         messagebox.showinfo("sign in using email", "face didn't find")
-            
-    #         loginpage()
+        except:
+            messagebox.showinfo("sign in using email", "face didn't find")
+            file_path1 = 'most_emotion.txt'
+            if os.path.exists(file_path1):
+                os.remove(file_path1) 
+            loginpage()
 
 
     forgot_password_image= PhotoImage(file="python\\new\\forget.png")

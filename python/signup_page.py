@@ -93,7 +93,7 @@ def show_custom_error(title, message):
 def signup(signup_first_name_entry, signup_last_name_entry, signup_email_entry, signup_password_entry):
     first_name = signup_first_name_entry.get()
     last_name = signup_last_name_entry.get()
-    username = first_name + last_name
+    username = f'{first_name} {last_name}'
     email = signup_email_entry.get()
     password = signup_password_entry.get()
     

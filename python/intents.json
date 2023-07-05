@@ -6510,6 +6510,51 @@
             "responses": [
                 "I will be always here for you"
             ]
+        },
+        {
+            "tag": "fact-710",
+            "patterns": [
+                "Hello "
+            ],
+            "responses": [
+                "Hello there, how's doing today ?"
+            ]
+        },
+        {
+            "tag": "fact-711",
+            "patterns": [
+                "Can i talk to you , i feel so sad today i wanna carry ?"
+            ],
+            "responses": [
+                "Ohh I'm really sorry to hear that, can you tell me what happend to you , I'm here for you !!"
+            ]
+        },
+        {
+            "tag": "fact-712",
+            "patterns": [
+                "I appreciate it your support. It means a lot to me."
+            ],
+            "responses": [
+                "We'll find ways to help you out ,So tell how I can make your day better !  ."
+            ]
+        },
+        {
+            "tag": "fact-713",
+            "patterns": [
+                "i dont have confident and thats make my friends always bully me ,and they always make fun of me in front of all people "
+            ],
+            "responses": [
+                "Listen to me my friend Dont listen to those peopleو You have to acknowledge your worth and focus on your positive qualities and achievements. And always Surround yourself with supportive people who value you"
+            ]
+        },
+        {
+            "tag": "fact-714",
+            "patterns": [
+                "ooh thank you for your advice , i will do what you told me "
+            ],
+            "responses": [
+                "you most welcome my friend and if you need anything jsut send me , i hope you alaways be better!"
+            ]
         }
     ]
 }

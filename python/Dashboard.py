@@ -107,7 +107,9 @@ class FirstPage:
                 
             except:
                 messagebox.showinfo("sign in using email", "face didn't find")
-                
+                file_path1 = 'most_emotion.txt'
+                if os.path.exists(file_path1):
+                    os.remove(file_path1)                 
                 page()
 
 

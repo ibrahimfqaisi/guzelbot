@@ -68,7 +68,7 @@ class FirstPage():
             app.start() 
             page()
                 #  pass  
-        def delet_info():
+        def Dashboard():
             dashboard_window.withdraw()
             file_path = 'userinfo.txt'
             os.remove(file_path)
@@ -181,19 +181,13 @@ class FirstPage():
 
 
 
-
-        def Dashboard():
-
-            dashboard_window.withdraw()
-            os.system("python python\\Dashboard.py")
-            dashboard_window.destroy()
             
         # ========== LOG OUT =======
         logout_button = Button(homepage,  image=photo6,
             borderwidth=0,
             highlightthickness=0,
             cursor='hand2',
-            relief="flat" , command=delet_info
+            relief="flat" , command=Dashboard
 )
         logout_button.place(x=1000, y=90)
         self.Welcome()

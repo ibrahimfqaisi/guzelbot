@@ -70,6 +70,8 @@ class FirstPage:
 
         def Dashboard():
             dashboard_window.withdraw()
+            file_path = 'userinfo.txt'
+            os.remove(file_path)
             os.system("python python\\Dashboard.py")
             dashboard_window.destroy()
 

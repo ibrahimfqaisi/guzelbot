@@ -167,8 +167,8 @@ def history():
 
                      # Display bot's response
                     receive_message( answer, align="right")
-            else:
-                receive_message( "No history found.", align="right")
+            # else:
+            #     receive_message( "No history found.", align="right")
 
             # Close the database connection
             conn.close()
@@ -185,26 +185,13 @@ def faceId():
     app.start() 
     os.system("python python\\home.py")
                 
-def delet_info():
-    window.withdraw()
-    file_path = 'userinfo.txt'
-    os.remove(file_path)
-    os.system("python python\\Dashboard.py")
-    os.system("python python/chat.py")
-    window.destroy()
-
 def Dashboard():
     window.withdraw()
-    os.system("python python\\Dashboard.py")
-    window.destroy()
-
-def delet_info():
-    window.withdraw()
     file_path = 'userinfo.txt'
     os.remove(file_path)
     os.system("python python\\Dashboard.py")
-    os.system("python python/chat.py")
     window.destroy()
+
 
 def about():
     window.withdraw()

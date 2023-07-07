@@ -33,7 +33,7 @@ class App:
         self.login_button_main_window = util.get_button(
             self.main_window, "login", "turquoise1", self.login
         )
-        self.login_button_main_window.place(x=800, y=300)
+        self.login_button_main_window.place(x=900, y=300)
 
         self.webcam_label = util.get_img_label(self.main_window)
         self.webcam_label.place(x=50, y=80, width=600, height=450)

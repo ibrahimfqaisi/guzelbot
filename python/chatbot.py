@@ -5,7 +5,7 @@ from model import NeuralNet
 from nltk_utils import bag_of_words, tokenize
 def chatbot1(question) :
     bye=["See you later ..","Love you","Don't be late to come back"]
-    if (question.lower() == "quit") | (question.lower() == "bye") | (question.lower() == "goodbye") | (question.lower() == "good bye"):
+    if (question.lower().strip() == "quit") | (question.lower().strip() == "bye") | (question.lower().strip() == "goodbye") | (question.lower().strip() == "good bye"):
         return f"{question.capitalize()}\n{random.choice(bye)}"
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 

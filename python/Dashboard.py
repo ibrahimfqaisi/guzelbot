@@ -25,6 +25,7 @@ class FirstPage:
         screen_height = dashboard_window.winfo_height()
         app_width = 1340
         app_height = 690
+        self.dashboard_window.title("Guzel Bot")
         x = (screen_width/2)-(app_width/2)
         y = (screen_height/160)-(app_height/160)
         dashboard_window.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
@@ -106,7 +107,9 @@ class FirstPage:
                 
             except:
                 messagebox.showinfo("sign in using email", "face didn't find")
-                
+                file_path1 = 'most_emotion.txt'
+                if os.path.exists(file_path1):
+                    os.remove(file_path1)                 
                 page()
 
 
@@ -130,6 +133,7 @@ class FirstPage:
 
 def page():
     window = Tk()
+    window.title("Guzel Bot")
     FirstPage(window)
     window.mainloop()
 

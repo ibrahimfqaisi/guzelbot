@@ -10,7 +10,7 @@ import tkinter as tk
 import util
 from  face_emotion import emotion
 from PIL import Image, ImageTk
-
+import random
 
 
 class FirstPage():
@@ -19,8 +19,8 @@ class FirstPage():
 
         # Load the background image
         background_image = Image.open("python\\new\\home.png")
-        background_image2 = Image.open("python\\new\\Guzel.png")
-
+        background_image2 = Image.open("python\\new\\welcome.png")
+        background_image2= background_image2.resize((700,460))
         self.background_photo = ImageTk.PhotoImage(background_image)
         self.background_photo2 = ImageTk.PhotoImage(background_image2)        
         # Window Size and Placement
@@ -30,6 +30,7 @@ class FirstPage():
         screen_height = dashboard_window.winfo_height()
         app_width = 1340
         app_height = 690
+        dashboard_window.title("Home")
         x = (screen_width/2)-(app_width/2)
         y = (screen_height/160)-(app_height/160)
         dashboard_window.geometry(f"{app_width}x{app_height}+{int(x)}+{int(y)}")
@@ -67,7 +68,7 @@ class FirstPage():
             app.start() 
             page()
                 #  pass  
-        def delet_info():
+        def Dashboard():
             dashboard_window.withdraw()
             file_path = 'userinfo.txt'
             os.remove(file_path)
@@ -180,19 +181,13 @@ class FirstPage():
 
 
 
-
-        def Dashboard():
-
-            dashboard_window.withdraw()
-            os.system("python python\\Dashboard.py")
-            dashboard_window.destroy()
             
         # ========== LOG OUT =======
         logout_button = Button(homepage,  image=photo6,
             borderwidth=0,
             highlightthickness=0,
             cursor='hand2',
-            relief="flat" , command=delet_info
+            relief="flat" , command=Dashboard
 )
         logout_button.place(x=1000, y=90)
         self.Welcome()
@@ -209,62 +204,108 @@ class FirstPage():
                 str_userinfo = file.read()
                 userinfo=str_userinfo.split(",")
                 name=userinfo[1]
+
                 if emotion == "Neutral" :
-                    self.pop(f"welcome {name} ,You are capable of amazing things. " )
-                #     messagebox.showinfo("welcome", f"{name} ,You are capable of amazing things. "  ) 
+                    self.pop(f"Hi {name} ,\n You are capable of \namazing things. " )
                 else :
-                      self.pop(f"welcome, Hi {name}, why you are felling {emotion} , what happend with you today ?")
-                #     messagebox.showinfo("welcome", f" Hi {name}, why you are felling {emotion} , what happend with you today ?" ) 
+                      self.pop(f"Hi {name},\n{message_emotion(emotion)}")
 
             os.remove(file_path1) 
     def chat2(self):
         self.register_new_user_window.destroy()
+        self.dashboard_window.withdraw()
+
         os.system("python python\\chat.py")
 
         self.dashboard_window.destroy()
-    def pop(self,text2):
+    def pop(self, text2):
         if hasattr(self, 'welcome') and self.register_new_user_window.winfo_exists():
             self.register_new_user_window.destroy()
 
         self.register_new_user_window = tk.Toplevel(self.dashboard_window)
-        self.register_new_user_window.geometry("720x480")
-        self.register_new_user_window.title("Register New User")
+        self.register_new_user_window.attributes('-topmost', True)
+        self.register_new_user_window.geometry("600x400")
+        self.register_new_user_window.title("welcome")
+        self.center_window()
 
-        # Use the existing background image label for the window
         self.background_label = tk.Label(self.register_new_user_window, image=self.background_photo2)
         self.background_label.place(x=0, y=0, relwidth=1, relheight=1)
 
         self.accept_button_register_new_user_window = util.get_button(
             self.register_new_user_window, 'Chat', 'turquoise1', self.chat2
-            
         )
-        self.accept_button_register_new_user_window.place(x=160, y=120)
+        self.accept_button_register_new_user_window.place(x=170, y=300)
+
 
         self.try_again_button_register_new_user_window = util.get_button(
-            self.register_new_user_window, 'close', 'navy', self.try_again_register_new_user
+            self.register_new_user_window, 'Close', 'navy', self.try_again_register_new_user
         )
-        self.try_again_button_register_new_user_window.place(x=160, y=240)
+        self.try_again_button_register_new_user_window.place(x=330, y=300)
 
-        # Additional text
-        self.additional_text_label = tk.Label(self.register_new_user_window, text=text2)
-        self.additional_text_label.config(font=("Arial", 16))  # Increase font size to 16
+        # Calculate the position of the additional text label dynamically
+        # label_width = 400
+        # label_height = 200
+        label_x = 25
+        label_y = 160
 
-        self.additional_text_label.place(x=160, y=20)
+        self.additional_text_label = tk.Label(self.register_new_user_window, text=text2,bg='#A28DCF')
+        self.additional_text_label.config(font=("Arial", 16))
+        self.additional_text_label.place(x=label_x, y=label_y)
 
+        self.register_new_user_window.resizable("false", 'false')
+
+    def center_window(self):
+        self.register_new_user_window.update_idletasks()
+        width = self.register_new_user_window.winfo_width()
+        height = self.register_new_user_window.winfo_height()
+
+        screen_width = self.register_new_user_window.winfo_screenwidth()
+        screen_height = self.register_new_user_window.winfo_screenheight()
+
+        x = (screen_width // 2) - (width // 2)
+        y = (screen_height // 2) - (height // 2)
+
+        self.register_new_user_window.geometry(f"{width}x{height}+{x}+{y}")
             # self.add_img_to_label(self.capture_label)
     def try_again_register_new_user(self):
         self.register_new_user_window.destroy()
-def page():
-    try:
-        window = Tk()
-        global mainPoag
-        mainPoag=FirstPage(window)
-        mainPoag
-        mainPoag.Welcome()
-        window.mainloop()
-    except KeyboardInterrupt:
-        FirstPage.delet_info()
+def message_emotion(emotion):
+    messages = {
+        'Sad': [
+            "This sadness is temporary, and brighter\n days are on the horizon.",
+            "You are stronger than you know, and you \n have the power to overcome this sadness.",
+            "Remember that you are surrounded by people\n who care about you and want to support you.",
+            "This sadness is a temporary setback, and it \n will only make your eventual triumph even more satisfying.",
+            "Every day is a new opportunity for positive \n experiences and personal growth.",
+            "Believe in yourself and your ability to find \n happiness and fulfillment once again."
+        ],
+        'Angry': [
+            "Take a deep breath and remind yourself that you have the\n power to choose how\ you respond to this anger.",
+            "Use your anger as motivation to make a  difference and \nadvocate for positive solutions.",
+            "Channel your anger into productive actions that promote \nunderstanding, justice, and positive outcomes.",
+            "Remember that forgiveness and letting go of anger can bring \nyou peace and allow you to move forward.",
+            "Surround yourself with positive influences and seek support \nfrom loved ones who can offer guidance and encouragement.",
+            "Believe in your ability to rise above anger and transform it\n into compassion, resilience, and positive change."
+        ],
+        'Happy': [
+            "Your happiness is contagious and radiates \n positive energy to those around you.",
+            "Embrace and savor this moment of happiness,\n for it is a precious gift.",
+            "Allow your happiness to inspire and uplift \nothers, spreading joy wherever you go.",
+            "Let your happiness be a reminder to cherish\n and appreciate the beauty in everyday moments.",
+            "Use this happiness as fuel to pursue your \n dreams and live a fulfilling, purposeful life.",
+            "Remember that your happiness is a reflection\n of your own inner strength, resilience, and positivity."
+        ]
+    }
 
+    if emotion in messages:
+        random_message = random.choice(messages[emotion])
+        return random_message
+    
+def page():
+        window = Tk()
+        window.title("Home")
+        FirstPage(window)
+        window.mainloop()
 
 if __name__ == '__main__':
     page()

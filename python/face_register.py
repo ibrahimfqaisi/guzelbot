@@ -8,10 +8,12 @@ import util
 from  face_emotion import emotion
 from PIL import Image, ImageTk
 
+
 class App:
     def __init__(self):
         self.main_window = tk.Tk()
         self.main_window.geometry("1340x690")
+        self.main_window.title("Face Signup")
 
         # Load the background image
         background_image = Image.open("python\\new\\Guzel.png")
@@ -23,9 +25,9 @@ class App:
         )
         self.background_label.place(x=0, y=0, relwidth=1, relheight=1)
 
-        self.register_new_user_button_main_window = util.get_button(self.main_window, 'add face id', 'gray',
+        self.register_new_user_button_main_window = util.get_button(self.main_window, 'add face id', '#53A9D4',
                                                                     self.register_new_user, fg='black')
-        self.register_new_user_button_main_window.place(x=800, y=300)
+        self.register_new_user_button_main_window.place(x=900, y=300)
 
         self.webcam_label = util.get_img_label(self.main_window)
         self.webcam_label.place(x=50, y=80, width=600, height=450)
@@ -81,14 +83,14 @@ class App:
         self.background_label.place(x=0, y=0, relwidth=1, relheight=1)
 
         self.accept_button_register_new_user_window = util.get_button(
-            self.register_new_user_window, 'Accept', 'green', self.accept_register_new_user
+            self.register_new_user_window, 'Accept', '#53A9D4', self.accept_register_new_user
         )
-        self.accept_button_register_new_user_window.place(x=800, y=250)
+        self.accept_button_register_new_user_window.place(x=900, y=250)
 
         self.try_again_button_register_new_user_window = util.get_button(
-            self.register_new_user_window, 'Try again', 'red', self.try_again_register_new_user
+            self.register_new_user_window, 'Try again', '#324E92', self.try_again_register_new_user
         )
-        self.try_again_button_register_new_user_window.place(x=800, y=350)
+        self.try_again_button_register_new_user_window.place(x=900, y=350)
 
         self.capture_label = util.get_img_label(self.register_new_user_window)
         self.capture_label.place(x=50, y=80, width=600, height=450)

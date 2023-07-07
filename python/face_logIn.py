@@ -15,6 +15,7 @@ connectDatabase = os.getenv("conn")
 class App:
     def __init__(self):
         self.main_window = tk.Tk()
+        self.main_window.title("Face Login")
         self.main_window.geometry("1340x690")
 
         # Load the background image
@@ -32,7 +33,7 @@ class App:
         self.login_button_main_window = util.get_button(
             self.main_window, "login", "turquoise1", self.login
         )
-        self.login_button_main_window.place(x=800, y=300)
+        self.login_button_main_window.place(x=900, y=300)
 
         self.webcam_label = util.get_img_label(self.main_window)
         self.webcam_label.place(x=50, y=80, width=600, height=450)
@@ -94,7 +95,8 @@ class App:
         name = util.recognize(self.most_recent_capture_arr, self.db_dir)
 
         if name in ["unknown_person", "no_persons_found"]:
-            util.msg_box("Ups...", "Unknown user. Please register new user or try again.")
+            pass
+            # util.msg_box("Ups...", "Unknown user. Please register new user or try again.")
         else:
             get_email = name
             self.saveData(get_email)

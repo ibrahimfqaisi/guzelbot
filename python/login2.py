@@ -27,6 +27,7 @@ Aseel
 def show_custom_error(title, message):
     global win
     win = Toplevel()
+    win.title("Login")
     
     window_width = 350
     window_height = 150
@@ -36,7 +37,7 @@ def show_custom_error(title, message):
     position_right = int(screen_width / 2 - window_width / 2)
     win.geometry(f"{window_width}x{window_height}+{position_right}+{position_top}")
     win.title(title)
-    win.configure(background="#272A37")
+    win.configure(background="#6C5692")
     win.resizable(False, False)
 
     label = Label(win, text=message, fg="white", bg="#272A37")
@@ -93,7 +94,7 @@ def destroy_login():
 def loginpage ():
     global window
     window = Tk()
-
+    window.title('login ')
     # window.state('zoomed')
     window.rowconfigure(0, weight=1)
     window.columnconfigure(0, weight=1)
@@ -137,28 +138,7 @@ def loginpage ():
 
     )
     switchSignup.place(x=370, y=80,)
-    # ================ GO TO Back ====================
-    signup_img2= PhotoImage(file="python\\new\\signup.png")
-
-
-      
-    switchSignup = Button(
-        bg_imageLogin,
-        image=signup_img2,
-        text="Back",
-        fg="#ff6c38",
-        font=("yu gothic ui Bold", 15 * -1),
-        bg="#272A37",
-        bd=0,
-        cursor="hand2",
-        activebackground="#272A37",
-        activeforeground="#ffffff",
-        command=lambda  : [destroy_login(),Dashboard.page()]
-
-    )
-    switchSignup.place(x=350, y=140,)
     
-
 
     # ================ Email Name Section ====================
 
@@ -241,6 +221,7 @@ def loginpage ():
     face_button_1.place(x=330, y=520)
 
     def face():
+        
         destroy_login()
         app = App()
         app.start()     
@@ -253,7 +234,9 @@ def loginpage ():
             
         except:
             messagebox.showinfo("sign in using email", "face didn't find")
-            
+            file_path1 = 'most_emotion.txt'
+            if os.path.exists(file_path1):
+                os.remove(file_path1) 
             loginpage()
 
 
@@ -265,7 +248,7 @@ def loginpage ():
         bg='#A28DCF',
         bd=0,
         borderwidth=0,
-        activeforeground="#ffffff",
+        activeforeground="#A28DCF",
         cursor="hand2",
         command=lambda: forgot_password(),
     )
@@ -285,22 +268,32 @@ def loginpage ():
 
         win.title('Forgot Password')
         # win.iconbitmap('images\\aa.ico')
-        win.configure(background='#272A37')
+        win.configure(background='#A28DCF')
         win.resizable(False, False)
 
+        home_bgImg = Image.open('python\\new\\Guzel.png')
+        home_bgImg = home_bgImg.resize((370, 360))
+
+        photo = ImageTk.PhotoImage(home_bgImg)
+        home_bg = Label(win, image=photo, bg='#525561')
+        home_bg.image = photo
+        home_bg.place(x=-10, y=-10)
+
+
+
         # ====== Email ====================
-        email_entry3 = Entry(win, bg="#3D404B", font=("yu gothic ui semibold", 12), highlightthickness=1,
+        email_entry3 = Entry(win, bg="#A28DCF", font=("yu gothic ui semibold", 12), highlightthickness=1,
                             bd=0)
         email_entry3.place(x=40, y=80, width=256, height=50)
         email_entry3.config(highlightbackground="#3D404B", highlightcolor="#206DB4")
-        email_label3 = Label(win, text='• Email', fg="#FFFFFF", bg='#272A37',
+        email_label3 = Label(win, text='• Email', fg="#FFFFFF", bg='#623F82',
                             font=("yu gothic ui", 15, 'bold'))
-        email_label3.place(x=40, y=50)
+        email_label3.place(x=40, y=40)
 
-        update_pass = Button(win, fg='#f8f8f8', text='Update Password', bg='#ff6c38', font=("yu gothic ui", 15, "bold"),
-                            cursor='hand2', relief="flat", bd=0, highlightthickness=0, activebackground="#1D90F5",
+        update_pass = Button(win, fg='#f8f8f8', text='Update Password', bg='#53A9D4', font=("yu gothic ui", 15, "bold"),
+                            cursor='hand2', relief="flat", bd=0, highlightthickness=0, activebackground="#324E92",
                             command=lambda:destroy_resset(email_entry3))
-        update_pass.place(x=40, y=260, width=256, height=45)
+        update_pass.place(x=40, y=200, width=256, height=45)
         # window.destroy()
 
         def destroy_resset(email_entrey):

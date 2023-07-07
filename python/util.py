@@ -15,8 +15,8 @@ def get_button(window, text, color, command, fg='white'):
                         fg=fg,
                         bg=color,
                         command=command,
-                        height=2,
-                        width=20,
+                        height=1,
+                        width=8,
                         font=('Helvetica bold', 20)
                     )
 
